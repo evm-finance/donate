@@ -19,7 +19,7 @@ var user_address = ""
 var key = "ckey_96476df6d859418b82a2eeda4fe"
 const client = new GoldRushClient(key)
 
-
+const chemo_cost = 1112
 var total_gas_costs = 0
 var total_pnl = 0
 const holdings = {}
@@ -49,7 +49,10 @@ app.get('/api/echo', async (req, res) => {
         console.log(text)
         const transactions = await getAddressTransactions(text);
         processTransactions(transactions)
+
         console.log("total gas paid",total_gas_costs)
+        chemo_gas = total_gas_costs / chemo_cost
+        console.log("gas fees can pay for",chemo_gas," chemo sessions")
 
         // res.json(transactions);
     } catch (error) {
