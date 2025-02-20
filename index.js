@@ -19,6 +19,7 @@ var user_address = ""
 var key = "ckey_96476df6d859418b82a2eeda4fe"
 const client = new GoldRushClient(key)
 
+
 var total_gas_costs = 0
 var total_pnl = 0
 const holdings = {}
@@ -69,24 +70,43 @@ const decodeSwapEvents = (log) => {
 
     var user_as_hex = user_address.slice(2);
     const user = appendBytes.concat(user_as_hex)
-    console.log(log)
-    for (const data of log){
+    console.log("log",log)
+    for (const data of log.log_events){
+        console.log("data",data)
         if(data.decoded.name == 'Transfer')
         {
-            console.log(data)
+            console.log(data.decoded.params)
+            for(const param of data.decoded.params) {
+                if (param.name == 'from') {
+                    console.log('from',param.value)
+                    if(param.value == user_address) {
+
+                    }
+                }
+                // inflow
+                if (param.name == 'to') {
+                    console.log('to',param.value)
+                    if(param.value == user_address) {
+
+                    }
+                }
+                if (param.name == 'value') {
+                    console.log('value',param.value)
+                }
+            }
         }
     }
 }
 
 const processTransactions = (transactions) => {
-    console.log(transactions)
+    //console.log(transactions)
     for (const tx of transactions) {
         try {
             for (const log of tx.log_events){
                 if(log.decoded.name == 'Swap')
                 {
-                    console.log(tx)
-                    decodeSwapEvents(log)
+                    // console.log(tx)
+                    decodeSwapEvents(tx)
                     total_gas_costs += tx.gas_quote
                     break;
                 }
