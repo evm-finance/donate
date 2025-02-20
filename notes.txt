@@ -2,3 +2,7 @@ problems I faced:
 My first attempt to track PnL was by reading raw swap events from the Uniswap v2 and v3 pools.
 I realized that this was not a fully correct solution as it did not properly track swaps that crossed multiple pools,
 so I began to rewrite a new solution that tracks transfers into and out of a user account, in transactions that contained a swap event
+
+This does not use historical prices of tokens, simply tracks total amounts of tokens bought and sold using swap events
+It also does not account for deposits/withdrawals into an account
+It does not account for NFT transactions
